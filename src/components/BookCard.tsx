@@ -17,9 +17,13 @@ interface cardProp {
             key: string;
             title: string;
             author_name: string[];
-            cover_i: string;
             first_publish_year: number;
-        }[] | any
+            cover_i: string;
+            ebook_count_i: number;
+            edition_count: string[]
+            language: string;
+
+        }[]
     }[];
     isLoaded: boolean
 }
@@ -29,7 +33,7 @@ export default function BookCard({ data, isLoaded }: { data: cardProp["data"], i
     let content;
 
     if (isLoaded) {
-        content = data.docs.map((res: any) => {
+        content = data.docs.map((res: cardProp["data"][0]["docs"][0]) => {
             return (
 
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>

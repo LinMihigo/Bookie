@@ -1,16 +1,15 @@
 import { useState } from 'react'
-import fetch from './api';
+import fetch from './fetch';
 import { ModeToggle } from '@/components/mode-toggle'
 import Search from '@/components/Search'
 import BookCard from '@/components/BookCard'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-
 function App() {
   const [data, setData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const result = await fetch(e.target[0].value);
     setData(result)
