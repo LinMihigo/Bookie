@@ -1,21 +1,28 @@
 import { useState } from 'react'
-import fetch from './fetch';
+import useSWR from "swr"
 import { ModeToggle } from '@/components/mode-toggle'
 import Search from '@/components/Search'
-import BookCard from '@/components/BookCard'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import BookCard from './components/BookCard';
+import { Paginate } from './components/paginate';
 
 function App() {
-  const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [pageIndex, setPageIndex] = useState(1)
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await fetch(e.target[0].value);
-    setData(result)
+    console.log(e)
+    setSearchTerm(e.target[0].value);
     setIsLoaded(true);
-    console.log(result)
   };
+
+  const { data, isLoading } = useSWR(
+    `https://openlibrary.org/search.json?q=${searchTerm}&fields=*,availability&limit=10&page=${pageIndex}`
+  )
+
+  isLoaded && console.log(data, isLoaded, isLoading, searchTerm, pageIndex);
 
   return (
     <div className='container h-screen bg-white text-slate-950 dark:bg-slate-950 dark:text-slate-50'>
@@ -39,6 +46,7 @@ function App() {
         <div className='mx-auto mt-4'>
           {isLoaded && <BookCard data={data} isLoaded={isLoaded} />}
         </div>
+        <Paginate data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />
       </div>
     </div>
   )

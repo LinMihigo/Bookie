@@ -1,4 +1,3 @@
-
 import { cn } from '../lib/utils';
 import {
     Card,
@@ -28,12 +27,13 @@ interface cardProp {
     isLoaded: boolean
 }
 
-export default function BookCard({ data, isLoaded }: { data: cardProp["data"], isLoaded: boolean }) {
+export default function BookCard({ data, isLoaded }: { data: cardProp["data"], isLoaded: cardProp["isLoaded"] }) {
+
 
     let content;
 
     if (isLoaded) {
-        content = data.docs.map((res: cardProp["data"][0]["docs"][0]) => {
+        content = data && data.docs.map((res: cardProp["data"][0]["docs"][0]) => {
             return (
 
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>
@@ -43,7 +43,7 @@ export default function BookCard({ data, isLoaded }: { data: cardProp["data"], i
                     <div className='min-w-[465px] my-auto ml-4 mr-4'>
                         <CardHeader className='p-0 pb-2'>
                             <CardTitle>{res.title}</CardTitle>
-                            <CardDescription className='text-md text-slate-700 dark:text-slate-300'>By {res.author_name.map((name: string, i: number) => {
+                            <CardDescription className='text-md text-slate-700 dark:text-slate-300'>By {res.author_name ? res.author_name.map((name: string, i: number) => {
                                 while (i < 3) {
                                     if (i === res.author_name.length - 1 && res.author_name.length > 1) {
                                         return "and " + name;
@@ -53,11 +53,11 @@ export default function BookCard({ data, isLoaded }: { data: cardProp["data"], i
                                         return name + ", "
                                     }
                                 }
-                            })}</CardDescription>
+                            }) : "-"}</CardDescription>
                         </CardHeader>
                         <CardContent className="text-sm text-slate-500 dark:text-slate-400 p-0 ml-0">
                             <p>First published in {res.first_publish_year}</p>
-                            <p>{res.edition_count} editions, {res.ebook_count_i} ebooks, — <i>in</i> {res.language.length} languages</p>
+                            <p>{res.edition_count} editions, {res.ebook_count_i} ebooks, — <i>in</i> {res.language ? res.language.length : "-"} languages</p>
 
                             <Editions res={res} />
                         </CardContent>
