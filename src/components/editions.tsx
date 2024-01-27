@@ -8,7 +8,7 @@ export default function Editions({ res }) {
         }
     }
 
-    const renderer = res.edition_key.slice(0, 10).map((ed: string) => {
+    const renderer = res.edition_key ? res.edition_key.slice(0, 10).map((ed: string) => {
 
         return (
             <div key={ed} className='mr-1 w-[38px] h-[58px]'>
@@ -21,7 +21,7 @@ export default function Editions({ res }) {
             </div>
         )
 
-    })
+    }) : null;
 
     return (
         <div className='flex mt-1'>{renderer}</div>

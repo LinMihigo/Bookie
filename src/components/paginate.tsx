@@ -16,7 +16,7 @@ export function Paginate({ data, pageIndex, setPageIndex }: { data: dataProp["nu
 
 
     return (
-        <Pagination>
+        <Pagination className='mb-4'>
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious href={`/${pageIndex}`} onClick={e => {
