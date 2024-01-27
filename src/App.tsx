@@ -14,7 +14,8 @@ function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(e);
-    setSearchTerm(e.target['0' as keyof typeof e.target].value as string);
+    const target = e.target as typeof e.target & { 0: { value: string } };
+    setSearchTerm(target[0].value);
     setPageIndex(1);
     setIsLoaded(true);
   };
@@ -45,9 +46,9 @@ function App() {
         </div>
 
         <div className=''>
-          {isLoaded && <BookCard data={data} isLoaded={isLoaded} />}
+          {isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} />}
         </div>
-        {isLoaded && !isLoading && <Paginate data={data} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
+        {isLoaded && !isLoading && <Paginate numFound={data.numFound} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
       </div>
     </div>
   )

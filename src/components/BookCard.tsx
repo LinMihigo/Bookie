@@ -10,28 +10,27 @@ import {
 import { Button } from './ui/button';
 import Editions from '@/components/editions';
 
-interface cardProp {
-    data: {
-        docs: {
-            key: string;
-            title: string;
-            author_name: string[];
-            first_publish_year: number;
-            cover_i: string;
-            ebook_count_i: number;
-            edition_count: number
-            language: string[];
-        }[]
+interface bookCardProp {
+    docs: {
+        key: string;
+        title: string;
+        author_name: string[];
+        first_publish_year: number;
+        cover_i: string;
+        ebook_count_i: number;
+        edition_count: number
+        language: string[];
+        edition_key: string[]
     }[];
     isLoaded: boolean
 }
 
-export default function BookCard({ data, isLoaded }: { data: cardProp["data"], isLoaded: cardProp["isLoaded"] }) {
+export default function BookCard({ bookData, isLoaded }: { bookData: bookCardProp["docs"], isLoaded: bookCardProp["isLoaded"] }) {
 
     let content;
 
     if (isLoaded) {
-        content = data && data.docs.map((res: cardProp["data"][0]["docs"][0]) => {
+        content = bookData && bookData.map((res: bookCardProp["docs"][0]) => {
             return (
 
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>

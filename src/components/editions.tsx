@@ -1,10 +1,18 @@
+import React from "react";
 
-export default function Editions({ res }) {
+interface editionProps {
+    res: {
+        edition_key: string[]
+        edition_count: number
+    }
+}
+export default function Editions({ res }: { res: editionProps["res"] }) {
 
     const placeholder = 'https://placehold.co/40x60?text=*'
-    const handleImageLoad = (event) => {
-        if (event.target.naturalHeight < 5) {
-            event.target.src = placeholder;
+    const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = event.target as HTMLImageElement
+        if (img.naturalHeight < 5) {
+            img.src = placeholder;
         }
     }
 

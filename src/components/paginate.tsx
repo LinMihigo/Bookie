@@ -8,12 +8,11 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-interface dataProp {
+interface paginateProp {
     numFound: number
 }
 
-export function Paginate({ data, pageIndex, setPageIndex }: { data: dataProp["numFound"], pageIndex: number, setPageIndex: (pageIndex: number) => void }) {
-
+export function Paginate({ numFound, pageIndex, setPageIndex }: { numFound: paginateProp["numFound"], pageIndex: number, setPageIndex: (pageIndex: number) => void }) {
 
     return (
         <Pagination className='mb-4'>
@@ -60,7 +59,7 @@ export function Paginate({ data, pageIndex, setPageIndex }: { data: dataProp["nu
                 <PaginationItem>
                     <PaginationNext href={`/${pageIndex}`} onClick={(e) => {
                         e.preventDefault()
-                        data && pageIndex < data.numFound / 10 ? setPageIndex(pageIndex + 1) : setPageIndex(pageIndex)
+                        numFound && pageIndex < numFound / 10 ? setPageIndex(pageIndex + 1) : setPageIndex(pageIndex)
                     }} />
                 </PaginationItem>
             </PaginationContent>
