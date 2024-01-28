@@ -21,12 +21,14 @@ export default function Editions({ res }: { res: editionProps["res"] }) {
 
         return (
             <div key={ed} className='mr-1 w-[38px] h-[58px] opacity-50 hover:opacity-100'>
-                <img
-                    className='w-full h-full object-fit rounded'
-                    src={`https://covers.openlibrary.org/b/olid/${ed}-L.jpg`}
-                    alt={`Edition: ${ed}`}
-                    onLoad={handleImageLoad}
-                />
+                <a href={`https://openlibrary.org/books/${ed}`} target="_blank">
+                    <img
+                        className='w-full h-full object-fit rounded'
+                        src={`https://covers.openlibrary.org/b/olid/${ed}-L.jpg`}
+                        alt={`Edition: ${ed}`}
+                        onLoad={handleImageLoad}
+                    />
+                </a>
             </div>
         )
 
