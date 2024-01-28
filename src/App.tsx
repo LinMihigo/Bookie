@@ -31,7 +31,7 @@ function App() {
       <div className="flex flex-col justify-between min-h-[600px] w-full justify-items-center">
         <div className='flex w-full h-[56px] mt-1 items-center justify-between'>
           <Avatar className='mx-8'>
-            <AvatarImage src="src/assets/Bookie.png" />
+            <AvatarImage src="/assets/Bookie-9TJ1YYXn.png" />
             <AvatarFallback>B</AvatarFallback>
           </Avatar>
           <div className="mx-8"><ModeToggle /></div>
