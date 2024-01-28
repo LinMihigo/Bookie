@@ -12,7 +12,7 @@ import Editions from '@/components/editions';
 import React from 'react';
 
 interface bookCardProp {
-    docs: {
+    bookData: {
         key: string;
         title: string;
         author_name: string[];
@@ -27,11 +27,11 @@ interface bookCardProp {
     isLoading: boolean;
 }
 
-export default function BookCard({ bookData, isLoaded, isLoading }: { bookData: bookCardProp["docs"], isLoaded: bookCardProp["isLoaded"], isLoading: bookCardProp["isLoading"] }) {
+export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp) {
 
     let content;
     if (isLoaded && !isLoading) {
-        content = bookData && bookData.map((res: bookCardProp["docs"][0]) => {
+        content = bookData && bookData.map((res: bookCardProp["bookData"][0]) => {
             return (
 
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>
