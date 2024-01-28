@@ -47,7 +47,11 @@ function App() {
         </div>
 
         <div className=''>
-          {isLoading ? <Skeleton times={3} className="h-[190px] w-[800px] rounded-lg border border-slate-200 bg-slate-50 text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50" /> : isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} isLoading={isLoading} />}
+          {
+            isLoading
+              ? <Skeleton times={3} />
+              : isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} isLoading={isLoading} />
+          }
         </div>
         {isLoaded && data && !isLoading && <Paginate numFound={data.numFound} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
       </div>

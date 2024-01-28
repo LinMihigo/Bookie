@@ -20,9 +20,9 @@ export default function Editions({ res }: { res: editionProps["res"] }) {
     const renderer = res.edition_key ? res.edition_key.slice(0, 10).map((ed: string) => {
 
         return (
-            <div key={ed} className='mr-1 w-[38px] h-[58px]'>
+            <div key={ed} className='mr-1 w-[38px] h-[58px] opacity-50 hover:opacity-100'>
                 <img
-                    className='w-full h-full object-fit'
+                    className='w-full h-full object-fit rounded'
                     src={`https://covers.openlibrary.org/b/olid/${ed}-L.jpg`}
                     alt={`An edition of ${res.title}`}
                     onLoad={handleImageLoad}

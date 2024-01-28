@@ -34,9 +34,9 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
         content = bookData && bookData.map((res: bookCardProp["bookData"][0]) => {
             return (
 
-                <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>
+                <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-stone-50 mb-2 mx-auto")}>
                     <div className='min-w-[103px] min-h-[164px] w-[103px] h-[164px] my-auto ml-4'>
-                        <img className='w-full h-full object-fit'
+                        <img className='w-full h-full object-fit rounded'
                             src={`https://covers.openlibrary.org/b/id/${res.cover_i}-L.jpg`}
                             alt={`Cover of ${res.title}`}
                             onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -50,7 +50,7 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
                     <div className='min-w-[465px] my-auto ml-4 mr-4'>
                         <CardHeader className='p-0 pb-2'>
                             <CardTitle>{res.title.length > 40 ? `${res.title.substring(0, 35)}...` : res.title}</CardTitle>
-                            <CardDescription className='text-md text-slate-700 dark:text-slate-300'>By
+                            <CardDescription className='text-md text-stone-700 dark:text-stone-300'>By
                                 {" "}
                                 {res.author_name ?
                                     res.author_name.slice(0, 3).map((name: string, i: number) => {
@@ -68,7 +68,7 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
                                 }
                             </CardDescription>
                         </CardHeader>
-                        <CardContent className="text-sm text-slate-500 dark:text-slate-400 p-0 ml-0">
+                        <CardContent className="text-sm text-stone-500 dark:text-stone-400 p-0 ml-0">
                             <p>First published in {res.first_publish_year}</p>
                             <p>
                                 {res.edition_count === 1 ? `${res.edition_count} edition` : `${res.edition_count} editions`},
