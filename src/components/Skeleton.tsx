@@ -15,8 +15,8 @@ export default function Skeleton({ times }: { times: number }) {
                     </div>
 
                     <div className="flex flex-col ml-7 gap-2 justify-center p-2 rounded min-h-[15px] min-w-[60px]">
-                        <div className="pr-20 pl-10 pt-8 bg-stone-300 dark:bg-stone-900"></div>
-                        <div className="pr-20 pl-10 pt-8 bg-stone-300 dark:bg-stone-900"></div>
+                        <div className="pr-20 pl-10 pt-8 bg-stone-300 dark:bg-stone-900 rounded"></div>
+                        <div className="pr-20 pl-10 pt-8 bg-stone-300 dark:bg-stone-900 rounded"></div>
                         <div></div>
                     </div>
                 </div>
