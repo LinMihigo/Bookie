@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from './ui/button';
 import Editions from '@/components/editions';
+import React from 'react';
 
 interface bookCardProp {
     docs: {
@@ -22,20 +23,29 @@ interface bookCardProp {
         language: string[];
         edition_key: string[]
     }[];
-    isLoaded: boolean
+    isLoaded: boolean;
+    isLoading: boolean;
 }
 
-export default function BookCard({ bookData, isLoaded }: { bookData: bookCardProp["docs"], isLoaded: bookCardProp["isLoaded"] }) {
+export default function BookCard({ bookData, isLoaded, isLoading }: { bookData: bookCardProp["docs"], isLoaded: bookCardProp["isLoaded"], isLoading: bookCardProp["isLoading"] }) {
 
     let content;
-
-    if (isLoaded) {
+    if (isLoaded && !isLoading) {
         content = bookData && bookData.map((res: bookCardProp["docs"][0]) => {
             return (
 
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-slate-50 mb-2 mx-auto")}>
                     <div className='min-w-[103px] min-h-[164px] w-[103px] h-[164px] my-auto ml-4'>
-                        <img className='w-full h-full object-fit' src={`https://covers.openlibrary.org/b/id/${res.cover_i}-L.jpg`} />
+                        <img className='w-full h-full object-fit'
+                            src={`https://covers.openlibrary.org/b/id/${res.cover_i}-L.jpg`}
+                            alt={`Cover of ${res.title}`}
+                            onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                                const img = e.target as HTMLImageElement
+                                if (img.naturalHeight < 5) {
+                                    img.src = 'https://placehold.jp/50/3d4070/ffffff/1030x1640.png?text=No%20img%20found'
+                                }
+                            }}
+                        />
                     </div>
                     <div className='min-w-[465px] my-auto ml-4 mr-4'>
                         <CardHeader className='p-0 pb-2'>

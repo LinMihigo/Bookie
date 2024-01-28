@@ -5,6 +5,7 @@ import Search from '@/components/Search'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import BookCard from './components/BookCard';
 import { Paginate } from './components/paginate';
+import Skeleton from './components/Skeleton';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,9 +47,9 @@ function App() {
         </div>
 
         <div className=''>
-          {isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} />}
+          {isLoading ? <Skeleton times={3} className="h-[190px] w-[800px] rounded-lg border border-slate-200 bg-slate-50 text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50" /> : isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} isLoading={isLoading} />}
         </div>
-        {isLoaded && !isLoading && <Paginate numFound={data.numFound} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
+        {isLoaded && data && !isLoading && <Paginate numFound={data.numFound} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
       </div>
     </div>
   )

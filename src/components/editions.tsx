@@ -4,11 +4,12 @@ interface editionProps {
     res: {
         edition_key: string[]
         edition_count: number
+        title: string
     }
 }
 export default function Editions({ res }: { res: editionProps["res"] }) {
 
-    const placeholder = 'https://placehold.co/40x60?text=*'
+    const placeholder = 'https://placehold.jp/50/3d4070/ffffff/400x600.png?text=No%20img%20found'
     const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
         const img = event.target as HTMLImageElement
         if (img.naturalHeight < 5) {
@@ -23,7 +24,7 @@ export default function Editions({ res }: { res: editionProps["res"] }) {
                 <img
                     className='w-full h-full object-fit'
                     src={`https://covers.openlibrary.org/b/olid/${ed}-L.jpg`}
-                    alt={ed}
+                    alt={`An edition of ${res.title}`}
                     onLoad={handleImageLoad}
                 />
             </div>
