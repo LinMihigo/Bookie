@@ -10,8 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <SWRConfig value={{
-        fetcher: async (url: string) => await axios.get(url).then(res => res.data).catch(error => console.error(error)),
-
+        fetcher: async (url: string) => await axios.get(url).then(res => res.data).catch(error => console.error(error))
       }}>
         <App />
       </SWRConfig>
