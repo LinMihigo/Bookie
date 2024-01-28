@@ -24,7 +24,7 @@ export default function Editions({ res }: { res: editionProps["res"] }) {
                 <img
                     className='w-full h-full object-fit rounded'
                     src={`https://covers.openlibrary.org/b/olid/${ed}-L.jpg`}
-                    alt={`An edition of ${res.title}`}
+                    alt={`Edition: ${ed}`}
                     onLoad={handleImageLoad}
                 />
             </div>
