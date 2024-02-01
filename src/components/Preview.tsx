@@ -87,18 +87,18 @@ export default function Preview(res: PreviewProp["res"]) {
                     <DialogDescription>
                         <b>Subjects: </b><br />{res.subject_key && res.subject_key.slice(0, 20).map((subject: string, i: number) => {
                             if (i === 19) {
-                                return <a key={subject} href={`https://openlibrary.org/subjects/person:${subject}`} target='_blank'>{subject}</a>
+                                return <a key={subject} href={`https://openlibrary.org/subjects/${subject}`} target='_blank'>{subject}</a>
                             } else {
-                                return <a href={`https://openlibrary.org/subjects/person:${subject}`} target='_blank'>{subject + " ‣ "}</a>
+                                return <a href={`https://openlibrary.org/subjects/${subject}`} target='_blank'>{subject + " ‣ "}</a>
                             }
                         })}
                     </DialogDescription>
                     <DialogDescription>
                         <b>Places: </b><br />{res.place_key && res.place_key.slice(0, 20).map((place: string, i: number) => {
                             if (i === 19) {
-                                return <a key={place} href={`https://openlibrary.org/subjects/person:${place}`} target='_blank'>{place}</a>
+                                return <a key={place} href={`https://openlibrary.org/subjects/place:${place}`} target='_blank'>{place}</a>
                             } else {
-                                return <a href={`https://openlibrary.org/subjects/person:${place}`} target='_blank'>{place + " ⏒ "}</a>
+                                return <a href={`https://openlibrary.org/subjects/place:${place}`} target='_blank'>{place + " ⏒ "}</a>
                             }
                         })}
                     </DialogDescription>
