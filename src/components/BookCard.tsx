@@ -3,6 +3,7 @@ import { cn } from '../lib/utils';
 import { Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from './ui/button';
 import Editions from '@/components/editions';
+import Preview from '@/components/Preview'
 
 interface bookCardProp {
     bookData: {
@@ -18,6 +19,14 @@ interface bookCardProp {
         edition_key: string[];
         cover_edition_key: string;
         ia_loaded_id: string[];
+        ratings_average: number;
+        ratings_count: number;
+        want_to_read_count: number;
+        currently_reading_count: number;
+        readinglog_count: number;
+        person_key: string[];
+        subject_key: string[];
+        place_key: string[];
     }[];
     isLoaded: boolean;
     isLoading: boolean;
@@ -28,8 +37,9 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
     let content;
     if (isLoaded && !isLoading) {
         content = bookData && bookData.map((res: bookCardProp["bookData"][0]) => {
-            return (
 
+            return (
+                // res stands for response
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-stone-50 mb-2 mx-auto")}>
                     <div className='min-w-[103px] min-h-[164px] w-[103px] h-[164px] my-auto ml-4'>
                         <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}`} target="_blank">
@@ -93,8 +103,9 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
                             <Editions res={res} />
                         </CardContent>
                     </div>
+
                     <CardFooter className='flex flex-col gap-2 justify-center p-4'>
-                        <Button className="w-[150px]">Preview</Button>
+                        <Preview {...res} />
                         <Button
                             variant='outline'
                             className="w-[150px]"
