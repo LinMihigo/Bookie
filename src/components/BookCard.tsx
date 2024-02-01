@@ -1,15 +1,8 @@
+import React from 'react';
 import { cn } from '../lib/utils';
-import {
-    Card,
-    CardDescription,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardFooter
-} from "@/components/ui/card"
+import { Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from './ui/button';
 import Editions from '@/components/editions';
-import React from 'react';
 
 interface bookCardProp {
     bookData: {
@@ -24,6 +17,7 @@ interface bookCardProp {
         language: string[];
         edition_key: string[];
         cover_edition_key: string;
+        ia_loaded_id: string[];
     }[];
     isLoaded: boolean;
     isLoading: boolean;
@@ -101,7 +95,18 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
                     </div>
                     <CardFooter className='flex flex-col gap-2 justify-center p-4'>
                         <Button className="w-[150px]">Preview</Button>
-                        <Button variant='outline' className="w-[150px]">Read</Button>
+                        <Button
+                            variant='outline'
+                            className="w-[150px]"
+                            onClick={() => {
+                                res.ia_loaded_id.length > 0 ?
+                                    window.open(`https://archive.org/details/${res.ia_loaded_id[0]}/mode/2up?view=theater`, '_blank') :
+                                    alert("No bookreader link available for this work!")
+                            }
+                            }
+                        >
+                            Read
+                        </Button>
                     </CardFooter>
                 </Card>
             );
