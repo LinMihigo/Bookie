@@ -68,10 +68,10 @@ export default function Preview(res: PreviewProp["res"]) {
                 </DialogHeader>
                 <DialogHeader>
                     <DialogDescription>
-                        <p>{`${res.want_to_read_count} want to read | ${res.currently_reading_count} currently reading | ${res.readinglog_count} have read`}</p>
+                        <b>{`${res.want_to_read_count}`}</b> → Want to read <b>|</b> <b>{`${res.currently_reading_count}`}</b> → Currently reading <b>|</b> <b>{`${res.readinglog_count}`}</b> → Have read
                     </DialogDescription>
                     <DialogDescription>
-                        <p>{`• Rating: ${res.ratings_average ? parseFloat(res.ratings_average.toFixed(2)) : "-"}/5 — (${res.ratings_count} Ratings)`}</p>
+                        {`• Rating: ${res.ratings_average ? parseFloat(res.ratings_average.toFixed(2)) : "-"}/5 — (${res.ratings_count} Ratings)`}
                     </DialogDescription>
                 </DialogHeader>
                 <DialogHeader>
