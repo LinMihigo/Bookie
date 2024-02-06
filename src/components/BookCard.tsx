@@ -110,9 +110,9 @@ export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp
                             variant='outline'
                             className="w-[150px]"
                             onClick={() => {
-                                res.ia_loaded_id.length > 0 ?
-                                    window.open(`https://archive.org/details/${res.ia_loaded_id[0]}/mode/2up?view=theater`, '_blank') :
-                                    alert("No bookreader link available for this work!")
+                                res.ia_loaded_id ?
+                                    window.open(`https://archive.org/details/${res.ia_loaded_id[0]}/mode/2up?view=theater`, '_blank')
+                                    : alert("No bookreader link available for this work!")
                             }
                             }
                         >

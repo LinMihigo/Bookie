@@ -89,7 +89,7 @@ export default function Preview(res: PreviewProp["res"]) {
                             if (i === 19) {
                                 return <a key={subject} href={`https://openlibrary.org/subjects/${subject}`} target='_blank'>{subject}</a>
                             } else {
-                                return <a href={`https://openlibrary.org/subjects/${subject}`} target='_blank'>{subject + " ‣ "}</a>
+                                return <a key={subject} href={`https://openlibrary.org/subjects/${subject}`} target='_blank'>{subject + " ‣ "}</a>
                             }
                         })}
                     </DialogDescription>
