@@ -22,7 +22,7 @@ This project enables users to search through the Internet Archive's index of boo
 
 ## How to Use
 
-1. **Clone the Repository**: Clone this repository to your local machine.
+1. **Clone the Repository**: Clone this repository to your local machine and cd into the project.
 
    ```bash
    git clone https://github.com/LinMihigo/Bookie.git
