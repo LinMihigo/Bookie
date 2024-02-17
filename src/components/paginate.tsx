@@ -7,62 +7,65 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { setPageIndex } from '../store/slices/bookieSlice'
+import { RootState } from "@/store/store";
 
-interface paginateProp {
-    numFound: number
-}
+export function Paginate() {
 
-export function Paginate({ numFound, pageIndex, setPageIndex }: { numFound: paginateProp["numFound"], pageIndex: number, setPageIndex: (pageIndex: number) => void }) {
+    const dispatch = useDispatch();
 
-    return (
+    const { data, pageIndex, isLoaded } = useSelector((state: RootState) => {
+        return {
+            data: state.bookie.data,
+            pageIndex: state.bookie.pageIndex,
+            isLoaded: state.bookie.isLoaded
+        }
+    }, shallowEqual)
+
+    const content =
         <Pagination className='mb-4'>
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious href={`/${pageIndex}`} onClick={e => {
                         e.preventDefault()
-                        pageIndex > 1 && setPageIndex(pageIndex - 1)
+                        pageIndex > 1 && dispatch(setPageIndex(pageIndex - 1))
                     }
                     } />
                 </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href={`/${pageIndex}`} onClick={e => {
-                        e.preventDefault()
-                        setPageIndex(1)
-                    }
-                    }>
-                        1
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href={`/${pageIndex}`} onClick={e => {
-                        e.preventDefault()
-                        setPageIndex(2)
-                    }
-                    }
-                        isActive
-                    >
-                        2
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink href={`/${pageIndex}`} onClick={e => {
-                        e.preventDefault()
-                        setPageIndex(3)
-                    }
-                    }>
-                        3
-                    </PaginationLink>
-                </PaginationItem>
+
+                {Array.from({ length: data.numFound / 10 < 10 ? data.numFound / 10 : 10 }, (_, i) => i + 1).map((i) => {
+                    return (
+                        <PaginationItem key={i}>
+                            <PaginationLink href={`/${pageIndex}`} onClick={e => {
+                                e.preventDefault()
+                                console.log(e)
+                                dispatch(setPageIndex(i))
+                            }
+                            }
+                                isActive={i === pageIndex}
+                            >
+                                {i}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )
+                })}
+
                 <PaginationItem>
                     <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
                     <PaginationNext href={`/${pageIndex}`} onClick={(e) => {
                         e.preventDefault()
-                        numFound && pageIndex < numFound / 10 ? setPageIndex(pageIndex + 1) : setPageIndex(pageIndex)
+                        data.numFound && pageIndex < data.numFound / 10 ? dispatch(setPageIndex(pageIndex + 1)) : dispatch(setPageIndex(pageIndex))
                     }} />
                 </PaginationItem>
             </PaginationContent>
         </Pagination>
+
+    return (
+        <div>
+            {isLoaded === true && data !== null && content}
+        </div>
     )
 }

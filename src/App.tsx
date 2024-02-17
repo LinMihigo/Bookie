@@ -1,31 +1,33 @@
-import { useState } from 'react'
-import useSWR from "swr"
+import useSWR from 'swr';
 import { ModeToggle } from '@/components/mode-toggle'
 import Search from '@/components/Search'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import BookCard from './components/BookCard';
-import { Paginate } from './components/paginate';
+import { Paginate } from './components/paginate'
+
 import Skeleton from './components/Skeleton';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { setData, setIsLoading } from './store/slices/bookieSlice'
+import { RootState } from './store/store';
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(e);
-    const target = e.target as typeof e.target & { 0: { value: string } };
-    setSearchTerm(target[0].value);
-    setPageIndex(1);
-    setIsLoaded(true);
-  };
+  const dispatch = useDispatch();
+  const { isLoaded, url } = useSelector((state: RootState) => {
+    return {
+      isLoaded: state.bookie.isLoaded,
+      url: state.bookie.url
+    }
+  }, shallowEqual) // * shallowEqual is used here to prevent unnecessary rerenders
 
-  const { data, isLoading } = useSWR(
-    isLoaded && `https://openlibrary.org/search.json?q=${searchTerm}&fields=*,availability&limit=10&page=${pageIndex}`
-  )
-
-  isLoaded && console.log(data, isLoaded, isLoading, searchTerm, pageIndex);
+  const { data, isLoading } = useSWR(() => isLoaded === true ? url : null, {
+    onLoading: (isLoading: boolean) => {
+      dispatch(setIsLoading(isLoading))
+    },
+    onSuccess: (data) => {
+      dispatch(setData(data))
+    }
+  })
 
   return (
     <div className='container min-h-screen min-w-screen overflow-scroll'>
@@ -41,19 +43,23 @@ function App() {
         <div className='my-4'>
           <h1 className="text-3xl font-bold text-center mb-4">🍄</h1>
 
-          <Search onSubmit={handleSubmit} />
+          <Search />
 
           <p className='text-sm text-center mt-2'>Search the I.A's index of full-text books.</p>
         </div>
 
         <div className=''>
           {
-            isLoading
-              ? <Skeleton times={3} />
-              : isLoaded && data && <BookCard bookData={data.docs} isLoaded={isLoaded} isLoading={isLoading} />
+            isLoading === true ?
+              <Skeleton times={3} /> :
+              <BookCard />
           }
         </div>
-        {isLoaded && data && !isLoading && <Paginate numFound={data.numFound} pageIndex={pageIndex} setPageIndex={setPageIndex} />}
+        <>
+          {
+            isLoading === false && data && <Paginate />
+          }
+        </>
       </div>
     </div>
   )

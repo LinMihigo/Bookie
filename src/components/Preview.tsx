@@ -35,7 +35,7 @@ interface PreviewProp {
     }
 }
 
-export default function Preview(res: PreviewProp["res"]) {
+export default function Preview(res: PreviewProp['res']) {
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -43,7 +43,7 @@ export default function Preview(res: PreviewProp["res"]) {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}`} target="_blank">
+                    <a href={`https://openlibrary.org/books/${res.cover_edition_key}`} target="_blank">
                         <DialogTitle>{res.title.length > 40 ? `${res.title.substring(0, 35)}...` : res.title}</DialogTitle>
                     </a>
                     <DialogDescription>
@@ -98,7 +98,7 @@ export default function Preview(res: PreviewProp["res"]) {
                             if (i === 19) {
                                 return <a key={place} href={`https://openlibrary.org/subjects/place:${place}`} target='_blank'>{place}</a>
                             } else {
-                                return <a href={`https://openlibrary.org/subjects/place:${place}`} target='_blank'>{place + " ⏒ "}</a>
+                                return <a key={place} href={`https://openlibrary.org/subjects/place:${place}`} target='_blank'>{place + " ⏒ "}</a>
                             }
                         })}
                     </DialogDescription>

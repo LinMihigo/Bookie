@@ -4,42 +4,28 @@ import { Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter }
 import { Button } from './ui/button';
 import Editions from '@/components/editions';
 import Preview from '@/components/Preview'
+import { shallowEqual, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
-interface bookCardProp {
-    bookData: {
-        key: string;
-        title: string;
-        author_name: string[];
-        author_key: string
-        first_publish_year: number;
-        cover_i: string;
-        ebook_count_i: number;
-        edition_count: number
-        language: string[];
-        edition_key: string[];
-        cover_edition_key: string;
-        ia_loaded_id: string[];
-        ratings_average: number;
-        ratings_count: number;
-        want_to_read_count: number;
-        currently_reading_count: number;
-        readinglog_count: number;
-        person_key: string[];
-        subject_key: string[];
-        place_key: string[];
-    }[];
-    isLoaded: boolean;
-    isLoading: boolean;
-}
+export default function BookCard() {
 
-export default function BookCard({ bookData, isLoaded, isLoading }: bookCardProp) {
+    const { data, isLoaded, isLoading } = useSelector((state: RootState) => {
+        return {
+            data: state.bookie.data,
+            isLoaded: state.bookie.isLoaded,
+            isLoading: state.bookie.isLoading
+        }
+    }, shallowEqual)
 
     let content;
-    if (isLoaded && !isLoading) {
-        content = bookData && bookData.map((res: bookCardProp["bookData"][0]) => {
+    if (isLoaded === true && isLoading === false && data) {
+        const bookData = data.docs
+        console.log("Data about to be rendered: ", bookData)
+        content = bookData && bookData.map((res) => {
 
             return (
-                // res stands for response
+
+                // * res stands for response
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-stone-50 mb-2 mx-auto")}>
                     <div className='min-w-[103px] min-h-[164px] w-[103px] h-[164px] my-auto ml-4'>
                         <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}`} target="_blank">
