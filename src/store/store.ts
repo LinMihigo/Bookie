@@ -3,6 +3,7 @@ import { bookieReducer } from "./slices/bookieSlice";
 import {
   setSearchTerm,
   setIsLoaded,
+  setLimit,
   setPageIndex,
   setSelectedValue,
   setIsLoading,
@@ -21,6 +22,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export {
   setSearchTerm,
+  setLimit,
   setPageIndex,
   setIsLoaded,
   setSelectedValue,

@@ -2,7 +2,8 @@ import React from 'react';
 import { cn } from '../lib/utils';
 import { Card, CardDescription, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from './ui/button';
-import Editions from '@/components/editions';
+import Editions from '@/components/Editions';
+import { Sort } from './Sort';
 import Preview from '@/components/Preview'
 import { shallowEqual, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -21,6 +22,7 @@ export default function BookCard() {
     if (isLoaded === true && isLoading === false && data) {
         const bookData = data.docs
         console.log("Data about to be rendered: ", bookData)
+
         content = bookData && bookData.map((res) => {
 
             return (
@@ -112,6 +114,7 @@ export default function BookCard() {
 
     return (
         <div>
+            <Sort />
             {content}
         </div>
     )

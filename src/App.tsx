@@ -3,7 +3,9 @@ import { ModeToggle } from '@/components/mode-toggle'
 import Search from '@/components/Search'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import BookCard from './components/BookCard';
-import { Paginate } from './components/paginate'
+import AuthorCard from './components/AuthorCard';
+import SubjectsCard from './components/SubjectsCard';
+import { Paginate } from './components/Paginate'
 
 import Skeleton from './components/Skeleton';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
@@ -13,10 +15,11 @@ import { RootState } from './store/store';
 function App() {
 
   const dispatch = useDispatch();
-  const { isLoaded, url } = useSelector((state: RootState) => {
+  const { isLoaded, url, selectedValue } = useSelector((state: RootState) => {
     return {
       isLoaded: state.bookie.isLoaded,
-      url: state.bookie.url
+      url: state.bookie.url,
+      selectedValue: state.bookie.selectedValue
     }
   }, shallowEqual) // * shallowEqual is used here to prevent unnecessary rerenders
 
@@ -28,6 +31,15 @@ function App() {
       dispatch(setData(data))
     }
   })
+
+  let renderer;
+  if (selectedValue === 'All' || selectedValue === "Title") {
+    renderer = <BookCard />
+  } else if (selectedValue === "Author") {
+    renderer = <AuthorCard />
+  } else if (selectedValue === "Subject") {
+    renderer = <SubjectsCard />
+  }
 
   return (
     <div className='container min-h-screen min-w-screen overflow-scroll'>
@@ -48,12 +60,8 @@ function App() {
           <p className='text-sm text-center mt-2'>Search the I.A's index of full-text books.</p>
         </div>
 
-        <div className=''>
-          {
-            isLoading === true ?
-              <Skeleton times={3} /> :
-              <BookCard />
-          }
+        <div className='mx-auto'>
+          {isLoading === true ? <Skeleton times={3} /> : renderer}
         </div>
         <>
           {

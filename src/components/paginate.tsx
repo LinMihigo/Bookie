@@ -15,9 +15,10 @@ export function Paginate() {
 
     const dispatch = useDispatch();
 
-    const { data, pageIndex, isLoaded } = useSelector((state: RootState) => {
+    const { data, limit, pageIndex, isLoaded } = useSelector((state: RootState) => {
         return {
             data: state.bookie.data,
+            limit: state.bookie.limit,
             pageIndex: state.bookie.pageIndex,
             isLoaded: state.bookie.isLoaded
         }
@@ -34,7 +35,7 @@ export function Paginate() {
                     } />
                 </PaginationItem>
 
-                {Array.from({ length: data.numFound / 10 < 10 ? data.numFound / 10 : 10 }, (_, i) => i + 1).map((i) => {
+                {Array.from({ length: data.numFound / limit < 10 ? data.numFound / limit : 10 }, (_, i) => i + 1).map((i) => {
                     return (
                         <PaginationItem key={i}>
                             <PaginationLink href={`/${pageIndex}`} onClick={e => {
@@ -57,7 +58,7 @@ export function Paginate() {
                 <PaginationItem>
                     <PaginationNext href={`/${pageIndex}`} onClick={(e) => {
                         e.preventDefault()
-                        data.numFound && pageIndex < data.numFound / 10 ? dispatch(setPageIndex(pageIndex + 1)) : dispatch(setPageIndex(pageIndex))
+                        data.numFound && pageIndex < data.numFound / limit ? dispatch(setPageIndex(pageIndex + 1)) : dispatch(setPageIndex(pageIndex))
                     }} />
                 </PaginationItem>
             </PaginationContent>

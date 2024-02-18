@@ -23,6 +23,11 @@ interface Data {
     person_key: string[];
     subject_key: string[];
     place_key: string[];
+    name: string;
+    work_count: number;
+    birth_date: string;
+    top_work: string;
+    count: number;
   }[];
   q: string;
   num_found: number;
@@ -37,6 +42,7 @@ interface State {
   data: Data;
   isLoading: boolean;
   isLoaded: boolean;
+  limit: number;
   pageIndex: number;
   selectedValue: string;
 }
@@ -55,22 +61,25 @@ const initialState: State = {
   },
   isLoading: false,
   isLoaded: false,
+  limit: 10,
   pageIndex: 1,
   selectedValue: "All",
 };
 
 function generateUrl(state: State) {
-  const baseUrl = "https://openlibrary.org/search.json";
-  const query = `q=${state.searchTerm}&fields=*,availability&limit=10&page=${state.pageIndex}`;
+  const allQuery = `https://openlibrary.org/search.json?q=${state.searchTerm}&fields=*,availability&limit=${state.limit}&page=${state.pageIndex}`;
+  const titleQuery = `https://openlibrary.org/search.json?q=title: ${state.searchTerm}&fields=*,availability&limit=${state.limit}&page=${state.pageIndex}`;
+  const subjectQuery = `https://openlibrary.org/search/subjects.json?q=${state.searchTerm}&limit=${state.limit}&page=${state.pageIndex}`;
+  const authorQuery = `https://openlibrary.org/search/authors.json?q=${state.searchTerm}&fields=*,availability&limit=${state.limit}&page=${state.pageIndex}`;
 
   if (state.selectedValue === "All") {
-    return `${baseUrl}?${query}`;
+    return `${allQuery}`;
   } else if (state.selectedValue === "Title") {
-    return `${baseUrl}?${query}`;
+    return `${titleQuery}`;
   } else if (state.selectedValue === "Author") {
-    return `${baseUrl}?${query}`;
+    return `${authorQuery}`;
   } else if (state.selectedValue === "Subject") {
-    return `${baseUrl}?${query}`;
+    return `${subjectQuery}`;
   }
 }
 
@@ -89,6 +98,11 @@ const bookieSlice = createSlice({
     setIsLoaded: (state, action) => {
       state.isLoaded = action.payload;
     },
+    setLimit: (state, action) => {
+      state.limit = action.payload;
+
+      state.url = generateUrl(state);
+    },
     setPageIndex: (state, action) => {
       state.pageIndex = action.payload;
       console.log("PageIndex: ", action.payload);
@@ -96,7 +110,17 @@ const bookieSlice = createSlice({
       state.url = generateUrl(state);
     },
     setSelectedValue: (state, action) => {
+      state.isLoaded = false;
       state.selectedValue = action.payload;
+
+      state.selectedValue === "Author"
+        ? (state.limit = 20)
+        : state.selectedValue === "Subject"
+        ? (state.limit = 30)
+        : (state.limit = 10);
+
+      console.log("selectedValue: ", action.payload);
+      console.log(state.url);
     },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
@@ -111,6 +135,7 @@ const bookieSlice = createSlice({
 export const {
   setSearchTerm,
   setIsLoaded,
+  setLimit,
   setPageIndex,
   setSelectedValue,
   setIsLoading,
