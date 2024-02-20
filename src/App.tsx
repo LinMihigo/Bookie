@@ -23,6 +23,7 @@ function App() {
     }
   }, shallowEqual) // * shallowEqual is used here to prevent unnecessary rerenders
 
+  // ? Better caching alternative? Maybe fetch and store data on a database?
   const { data, isLoading } = useSWR(() => isLoaded === true ? url : null, {
     onLoading: (isLoading: boolean) => {
       dispatch(setIsLoading(isLoading))

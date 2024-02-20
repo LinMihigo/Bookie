@@ -20,7 +20,7 @@ export default function Editions({ res }: { res: editionProps["res"] }) {
     const renderer = res.edition_key ? res.edition_key.slice(0, 10).map((ed: string) => {
 
         return (
-            <div key={ed} className='mr-1 w-[38px] h-[58px] opacity-50 hover:opacity-100'>
+            <div key={ed} className='mr-1 w-[38px] h-[58px] transition-transform duration-500 ease-in-out transform hover:scale-110 opacity-80 hover:opacity-100'>
                 <a href={`https://openlibrary.org/books/${ed}`} target="_blank">
                     <img
                         className='w-full h-full object-fit rounded'

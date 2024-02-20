@@ -45,10 +45,13 @@ interface State {
   limit: number;
   pageIndex: number;
   selectedValue: string;
+  sort: string;
 }
 
 const initialState: State = {
+  selectedValue: "All",
   searchTerm: "",
+  isLoaded: false,
   url: "",
   data: {
     numFound: 0,
@@ -60,12 +63,12 @@ const initialState: State = {
     offset: null,
   },
   isLoading: false,
-  isLoaded: false,
   limit: 10,
   pageIndex: 1,
-  selectedValue: "All",
+  sort: "relevance",
 };
 
+// ? fetching data every time changes are made to the fetching data url optimal?
 function generateUrl(state: State) {
   const allQuery = `https://openlibrary.org/search.json?q=${state.searchTerm}&fields=*,availability&limit=${state.limit}&page=${state.pageIndex}`;
   const titleQuery = `https://openlibrary.org/search.json?q=title: ${state.searchTerm}&fields=*,availability&limit=${state.limit}&page=${state.pageIndex}`;
@@ -129,6 +132,11 @@ const bookieSlice = createSlice({
       state.data = action.payload;
       console.log("data payload: ", action.payload);
     },
+    setSort: (state, action) => {
+      state.sort = action.payload;
+      console.log(action.payload);
+      state.url = generateUrl(state) + `&sort=${action.payload}`;
+    },
   },
 });
 
@@ -140,5 +148,6 @@ export const {
   setSelectedValue,
   setIsLoading,
   setData,
+  setSort,
 } = bookieSlice.actions;
 export const bookieReducer = bookieSlice.reducer;

@@ -27,11 +27,12 @@ export default function BookCard() {
 
             return (
 
+
                 // * res stands for response
                 <Card key={res.key} className={cn("flex w-[800px] min-h-[190px] bg-stone-50 mb-2 mx-auto")}>
                     <div className='min-w-[103px] min-h-[164px] w-[103px] h-[164px] my-auto ml-4'>
                         <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}`} target="_blank">
-                            <img className='w-full h-full object-fit rounded'
+                            <img className='w-full h-full object-fit rounded transition-transform duration-500 ease-in-out transform hover:scale-105'
                                 src={`https://covers.openlibrary.org/b/id/${res.cover_i}-L.jpg`}
                                 alt={`Cover of ${res.title}`}
                                 onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -114,7 +115,7 @@ export default function BookCard() {
 
     return (
         <div>
-            <Sort />
+            {isLoaded === true && isLoading === false && <Sort />}
             {content}
         </div>
     )

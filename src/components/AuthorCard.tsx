@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Button } from './ui/button';
 import { shallowEqual, useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { Sort } from './Sort';
 
 export default function AuthorCard() {
     const { data, isLoaded, isLoading } = useSelector((state: RootState) => {
@@ -23,10 +24,10 @@ export default function AuthorCard() {
             return (
 
                 // * res stands for response...
-                <Card key={res.key} className={cn("flex w-[380px] min-h-[190px] bg-stone-50")}>
-                    <div className='min-w-[140px] min-h-[164px] w-[103px] h-[164px] my-auto ml-3'>
+                <Card key={res.key} className={cn("flex w-[380px] min-h-[190px] bg-stone-50 p-2")}>
+                    <div className='w-[140px] h-[164px] my-auto ml-3'>
                         <a href={`https://openlibrary.org/authors/${res.key}/works?limit=100`} target="_blank">
-                            <img className='w-full h-full object-fit rounded'
+                            <img className='w-full h-full object-cover rounded'
                                 src={`https://covers.openlibrary.org/a/olid/${res.key}-L.jpg`}
                                 alt={`Cover of ${res.name}`}
                                 onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -38,7 +39,7 @@ export default function AuthorCard() {
                             />
                         </a>
                     </div>
-                    <div className='min-w-[200px] my-auto ml-4'>
+                    <div className='min-w-[160px] my-auto ml-4'>
                         <CardHeader className='p-0 pb-2'>
                             {/* TODO: Need to fix author redirect link */}
                             <a href={`https://openlibrary.org/authors/${res.key}/works?limit=100}`} target="_blank">
@@ -74,8 +75,12 @@ export default function AuthorCard() {
     }
 
     return (
-        <div className='flex flex-wrap gap-2 w-[800px]'>
-            {content}
+        <div className=''>
+            {isLoaded === true && isLoading === false && <Sort />}
+            <div className='grid grid-cols-2 gap-2 justify-items-center w-[800px]'>
+
+                {content}
+            </div>
         </div>
     )
 }

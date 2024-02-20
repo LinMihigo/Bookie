@@ -8,6 +8,7 @@ import {
   setSelectedValue,
   setIsLoading,
   setData,
+  setSort,
 } from "./slices/bookieSlice";
 
 export const store = configureStore({
@@ -28,4 +29,5 @@ export {
   setSelectedValue,
   setIsLoading,
   setData,
+  setSort,
 };
