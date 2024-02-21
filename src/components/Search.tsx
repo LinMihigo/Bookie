@@ -22,7 +22,7 @@ export default function Search() {
     return (
         <form onSubmit={handleSearchSubmit} className="flex w-full max-w-lg mx-auto space-x-1">
             <SelectSearchOption />
-            <Input className="placeholder:italic" name='search' placeholder="Search ..." />
+            <Input className="placeholder:italic min-w-96" name='search' placeholder="Search ..." />
             <Button type="submit">Search</Button>
         </form>
     )

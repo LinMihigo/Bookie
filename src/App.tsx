@@ -6,11 +6,12 @@ import BookCard from './components/BookCard';
 import AuthorCard from './components/AuthorCard';
 import SubjectsCard from './components/SubjectsCard';
 import { Paginate } from './components/Paginate'
-
-import Skeleton from './components/Skeleton';
+import logo from '@/assets/Bookie.svg'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { setData, setIsLoading } from './store/slices/bookieSlice'
 import { RootState } from './store/store';
+import { FaGithub } from "react-icons/fa";
+import Skeleton from './components/Skeleton';
 
 function App() {
 
@@ -43,32 +44,57 @@ function App() {
   }
 
   return (
-    <div className='container min-h-screen min-w-screen overflow-scroll'>
-      <div className="flex flex-col justify-between min-h-[600px] w-full justify-items-center">
-        <div className='flex w-full h-[56px] mt-1 items-center justify-between'>
-          <Avatar className='mx-8'>
-            <AvatarImage src="/assets/Bookie-9TJ1YYXn.png" />
-            <AvatarFallback>B</AvatarFallback>
-          </Avatar>
-          <div className="mx-8"><ModeToggle /></div>
+    <div className='container min-h-full min-w-xl'>
+      <div className="flex flex-col justify-between min-h-screen w-full justify-items-center">
+        <div className='flex w-full h-14 mt-1 items-center justify-between'>
+          <span className='flex justify-center'>
+            <Avatar className='ml-8 mr-2'>
+              <AvatarImage src={logo} />
+              <AvatarFallback className='bg-stone-200 rounded-none'>B</AvatarFallback>
+            </Avatar>
+            <span className='m-auto'>
+              <p className="font-display font-bold text-md">Bookie ৹</p>
+            </span>
+          </span>
+
+          <div className="flex m gap-2 mx-8">
+            <a className='m-auto' href="https://github.com/LinMihigo/Bookie" target="_blank">
+              <FaGithub size='1.8rem' />
+            </a>
+            <ModeToggle />
+          </div>
         </div>
 
         <div className='my-4'>
-          <h1 className="text-3xl font-bold text-center mb-4">🍄</h1>
+          <h1 className="text-3xl font-display font-bold text-center mb-4">Bookie</h1>
 
           <Search />
 
-          <p className='text-sm text-center mt-2'>Search the I.A's index of full-text books.</p>
+          <p className='text-xs text-center mt-2'>Search the I.A's index of full-text books.</p>
         </div>
 
         <div className='mx-auto'>
-          {isLoading === true ? <Skeleton times={3} /> : renderer}
+          {isLoading === true ? <Skeleton /> : renderer}
         </div>
         <>
           {
             isLoading === false && data && <Paginate />
           }
         </>
+
+        <div className='w-full h-[2rem] text-center'>
+          <p className='inline mr-2 text-sm text-xs'>Powered by&nbsp;
+            <a className='hover:text-purple-500' href='https://openlibrary.org' target='_blank'>
+              OpenLibrary
+            </a>
+          </p>
+          <span>•</span>
+          <p className='inline ml-2 text-xs'>@2024&nbsp;
+            <a className='hover:text-indigo-500' href="https://linmihigo.github.io/about/" target="_blank">
+              {'<Threee />'}
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   )

@@ -115,7 +115,7 @@ export default function BookCard() {
 
     return (
         <div>
-            {isLoaded === true && isLoading === false && <Sort />}
+            {isLoading === false && isLoaded === true && <Sort />}
             {content}
         </div>
     )
