@@ -7,7 +7,7 @@ import {
     SelectValue
 } from "@/components/ui/select"
 import { useDispatch } from 'react-redux'
-import { setSelectedValue } from "@/store/store";
+import { setSelectedValue } from "@/store/store"
 
 export default function SelectSearchOption() {
 
@@ -16,7 +16,7 @@ export default function SelectSearchOption() {
     const dispatch = useDispatch();
     const handleValueChange = (value: string | null) => {
         console.log(value)
-        dispatch(setSelectedValue(value));
+        dispatch(setSelectedValue(value))
     }
 
     return (

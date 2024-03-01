@@ -47,7 +47,7 @@ export default function BookCard() {
                     <div className='min-w-[465px] my-auto ml-4 mr-4'>
                         <CardHeader className='p-0 pb-2'>
                             <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}`} target="_blank">
-                                <CardTitle>{res.title.length > 40 ? `${res.title.substring(0, 35)}...` : res.title}</CardTitle>
+                                <CardTitle >{res.title.length > 40 ? `${res.title.substring(0, 35)}...` : res.title}</CardTitle>
                             </a>
 
                             <CardDescription className='text-md text-stone-700 dark:text-stone-300'>By

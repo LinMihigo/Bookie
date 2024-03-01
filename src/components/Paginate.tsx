@@ -10,19 +10,26 @@ import {
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { setPageIndex } from '../store/slices/bookieSlice'
 import { RootState } from "@/store/store";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 export function Paginate() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { data, limit, pageIndex, isLoaded } = useSelector((state: RootState) => {
+    const { data, limit, pageIndex, selectedValue, isLoaded } = useSelector((state: RootState) => {
         return {
             data: state.bookie.data,
             limit: state.bookie.limit,
             pageIndex: state.bookie.pageIndex,
+            selectedValue: state.bookie.selectedValue,
             isLoaded: state.bookie.isLoaded
         }
     }, shallowEqual)
+
+    useEffect(() => {
+        navigate(`/Search?${selectedValue}&page=${pageIndex}`)
+    }, [navigate, pageIndex, selectedValue])
 
     const content =
         <Pagination className='mb-4'>

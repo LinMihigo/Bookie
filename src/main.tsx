@@ -3,10 +3,28 @@ import ReactDOM from 'react-dom/client'
 import { ThemeProvider } from "@/components/theme-provider"
 import { SWRConfig } from 'swr'
 import axios from 'axios'
-import App from './App.tsx'
-import './index.css'
-import { store } from './store/store'
+import App from '@/App.tsx'
+import Root from '@/pages/searchHomePage'
+import '@/index.css'
+import { store } from '@/store/store'
 import { Provider } from 'react-redux'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+
+// * Disable console logs in prod
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => { }
+}
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />
+  },
+  {
+    path: '/Search',
+    element: <Root />,
+  }
+])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -15,7 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <SWRConfig value={{
           fetcher: async (url: string) => await axios.get(url).then(res => res.data).catch(error => console.error(error))
         }}>
-          <App />
+          <RouterProvider router={router} />
         </SWRConfig>
       </ThemeProvider>
     </Provider>
