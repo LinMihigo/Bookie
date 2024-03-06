@@ -1,23 +1,13 @@
 import { RootState } from '@/store/store'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
 import RootComponent from '@/components/RootComponent'
 import SubjectCard from '@/components/SubjectsCard'
 import AuthorCard from '@/components/AuthorCard'
 import BookCard from '@/components/BookCard'
 
-export default function Root() {
+export default function SearchHomePageWithResults() {
 
-    const navigate = useNavigate()
-
-    const selectedValue = useSelector((state: RootState) => {
-        return state.bookie.selectedValue
-    })
-
-    useEffect(() => {
-        navigate(`/Search?${selectedValue}`)
-    }, [navigate, selectedValue])
+    const selectedValue = useSelector((state: RootState) => state.bookie.selectedValue)
 
     let content: JSX.Element
     if (selectedValue === "Author") {

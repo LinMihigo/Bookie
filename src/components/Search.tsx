@@ -1,13 +1,27 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from '@/components/ui/input'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsLoaded, setSearchTerm } from '../store/slices/bookieSlice'
 import SelectSearchOption from "./SelectSearchOption"
+import { useSearchParams } from "react-router-dom"
+import { RootState } from '@/store/store'
 
 export default function Search() {
 
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const selectedValue = useSelector((state: RootState) => state.bookie.selectedValue)
+    const searchTerm = useSelector((state: RootState) => state.bookie.searchTerm)
+    const pageIndex = useSelector((state: RootState) => state.bookie.pageIndex)
+    const isLoaded = useSelector((state: RootState) => state.bookie.isLoaded)
+
+    useEffect(() => {
+
+        isLoaded === true && setSearchParams({ q: searchTerm, page: pageIndex.toString() })
+
+        console.log("searchParams: ", searchParams)
+    }, [isLoaded, searchParams, selectedValue, setSearchParams, pageIndex, searchTerm])
 
     const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

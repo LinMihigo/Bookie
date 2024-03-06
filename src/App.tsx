@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
-function App() {
 
+import { Link } from "react-router-dom"
+function App() {
 
   return (
     <div>
-      <Link to="/Search">Search</Link>
+      <Link to='/Search'>Search</Link>
     </div>
   )
 }

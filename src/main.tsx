@@ -4,11 +4,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SWRConfig } from 'swr'
 import axios from 'axios'
 import App from '@/App.tsx'
-import Root from '@/pages/searchHomePage'
 import '@/index.css'
 import { store } from '@/store/store'
 import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import SearchHomePage from './pages/searchHomePage'
 
 // * Disable console logs in prod
 if (process.env.NODE_ENV === 'production') {
@@ -18,11 +18,11 @@ if (process.env.NODE_ENV === 'production') {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />
+    element: <App />,
   },
   {
     path: '/Search',
-    element: <Root />,
+    element: <SearchHomePage />
   }
 ])
 
@@ -31,6 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
         <SWRConfig value={{
+          // * Simplified: async (url: string) => await axios.get(url).then(res => res.data).catch(error => console.error(error))
           fetcher: async (url: string) => await axios.get(url).then(res => res.data).catch(error => console.error(error))
         }}>
           <RouterProvider router={router} />

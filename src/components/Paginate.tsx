@@ -10,42 +10,35 @@ import {
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { setPageIndex } from '../store/slices/bookieSlice'
 import { RootState } from "@/store/store";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+
 export function Paginate() {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    const { data, limit, pageIndex, selectedValue, isLoaded } = useSelector((state: RootState) => {
+    const { data, limit, pageIndex, isLoaded } = useSelector((state: RootState) => {
         return {
             data: state.bookie.data,
             limit: state.bookie.limit,
             pageIndex: state.bookie.pageIndex,
-            selectedValue: state.bookie.selectedValue,
             isLoaded: state.bookie.isLoaded
         }
     }, shallowEqual)
-
-    useEffect(() => {
-        navigate(`/Search?${selectedValue}&page=${pageIndex}`)
-    }, [navigate, pageIndex, selectedValue])
 
     const content =
         <Pagination className='mb-4'>
             <PaginationContent>
                 <PaginationItem>
-                    <PaginationPrevious href={`/${pageIndex}`} onClick={e => {
+                    <PaginationPrevious className="hover:cursor-pointer" onClick={e => {
                         e.preventDefault()
                         pageIndex > 1 && dispatch(setPageIndex(pageIndex - 1))
                     }
                     } />
                 </PaginationItem>
 
-                {Array.from({ length: data.numFound / limit < 10 ? data.numFound / limit : 10 }, (_, i) => i + 1).map((i) => {
+                {data && Array.from({ length: data.numFound / limit < 10 ? data.numFound / limit : 10 }, (_, i) => i + 1).map((i) => {
                     return (
                         <PaginationItem key={i}>
-                            <PaginationLink href={`/${pageIndex}`} onClick={e => {
+                            <PaginationLink className="hover:cursor-pointer" onClick={e => {
                                 e.preventDefault()
                                 console.log(e)
                                 dispatch(setPageIndex(i))
@@ -63,7 +56,7 @@ export function Paginate() {
                     <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationNext href={`/${pageIndex}`} onClick={(e) => {
+                    <PaginationNext className="hover:cursor-pointer" onClick={(e) => {
                         e.preventDefault()
                         data.numFound && pageIndex < data.numFound / limit ? dispatch(setPageIndex(pageIndex + 1)) : dispatch(setPageIndex(pageIndex))
                     }} />

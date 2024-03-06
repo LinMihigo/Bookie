@@ -34,7 +34,7 @@ export function Sort() {
             </span>
             <span className="px-2">
                 <span>→ </span>
-                <span className="underline decoration-wavy decoration-indigo-500">{`${data.numFound}`}</span>
+                <span className="underline decoration-wavy decoration-indigo-500">{data && `${data.numFound}`}</span>
                 <span> hits</span>
             </span>
         </div>

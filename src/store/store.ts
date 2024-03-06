@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { bookieReducer } from "./slices/bookieSlice";
 import {
   setSearchTerm,
@@ -10,17 +10,51 @@ import {
   setData,
   setSort,
 } from "./slices/bookieSlice";
+import { State } from "./slices/bookieSlice";
+
+export interface RootState {
+  bookie: State;
+}
+
+const loadState = () => {
+  try {
+    const serializedState = sessionStorage.getItem("state");
+    if (serializedState === null) {
+      return undefined;
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const saveState = (state: RootState) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    sessionStorage.setItem("state", serializedState);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const persistedState: Partial<RootState> = loadState();
+const rootReducer = combineReducers({
+  bookie: bookieReducer,
+});
+console.log("Persisted state: ", persistedState);
 
 export const store = configureStore({
-  reducer: {
-    bookie: bookieReducer,
-  },
+  reducer: rootReducer,
+  preloadedState: persistedState,
 });
 
+store.subscribe(() => {
+  saveState(store.getState());
+});
 console.log(store.getState());
 
-export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export {
   setSearchTerm,
   setLimit,

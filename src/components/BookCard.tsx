@@ -68,10 +68,10 @@ export default function BookCard() {
                                 }
                             </CardDescription>
                         </CardHeader>
-                        <CardContent className="text-sm text-stone-500 dark:text-stone-400 p-0 ml-0">
+                        <CardContent className="text-sm text-stone-600 dark:text-stone-300 p-0 ml-0">
                             <p>First published in {res.first_publish_year}</p>
-                            <p className='text-stone-600'>
-                                <a className='text-stone-900' href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}&mode=all#editions-list`} target="_blank">
+                            <p >
+                                <a href={`https://openlibrary.org${res.key}?edition=key%3A/books/${res.cover_edition_key}&mode=all#editions-list`} target="_blank">
                                     {res.edition_count === 1 ? `${res.edition_count} edition` : `${res.edition_count} editions`}
                                 </a>,
                                 {" "}

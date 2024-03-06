@@ -36,7 +36,7 @@ interface Data {
   offset: null;
 }
 
-interface State {
+export interface State {
   searchTerm: string;
   url: string | undefined;
   data: Data;
@@ -100,6 +100,7 @@ const bookieSlice = createSlice({
     },
     setIsLoaded: (state, action) => {
       state.isLoaded = action.payload;
+      state.isLoaded === true ? (state.pageIndex = 1) : state.pageIndex;
     },
     setLimit: (state, action) => {
       state.limit = action.payload;
@@ -130,7 +131,6 @@ const bookieSlice = createSlice({
     },
     setData: (state, action) => {
       state.data = action.payload;
-      console.log("data payload: ", action.payload);
     },
     setSort: (state, action) => {
       state.sort = action.payload;
@@ -150,4 +150,5 @@ export const {
   setData,
   setSort,
 } = bookieSlice.actions;
+
 export const bookieReducer = bookieSlice.reducer;
