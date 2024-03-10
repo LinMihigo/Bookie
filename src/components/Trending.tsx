@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, MouseEvent } from "react"
 import Autoplay from "embla-carousel-autoplay";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,11 +15,12 @@ import { RootState } from "@/store/store";
 import useSWR from "swr";
 
 interface Res {
-    cover_i: number
+    cover_i: number,
+    key: string
 }
 export default function TrendingCarousel() {
 
-    const [isHovered, setIsHovered] = useState(false)
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
     const plugin = useRef(
         Autoplay({ delay: 2000, stopOnInteraction: true })
@@ -28,6 +29,15 @@ export default function TrendingCarousel() {
 
     const { data, isLoading } = useSWR("https://openlibrary.org/trending/monthly.json")
     console.log(data)
+
+    const handleMouseEnter = (event: MouseEvent<HTMLDivElement>, i: number) => {
+        console.log(event)
+        setHoveredIndex(i)
+    }
+
+    const handleMouseLeave = () => {
+        setHoveredIndex(null)
+    }
 
     return (
         <div className={`flex justify-center items-center ${isLoaded === false && "max-h-50"}`}>
@@ -42,10 +52,11 @@ export default function TrendingCarousel() {
                         <CarouselItem
                             key={i}
                             className='flex justify-center items-center basis-auto'
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
+                            onMouseEnter={(event) => handleMouseEnter(event, i)}
+                            onMouseLeave={() => handleMouseLeave()}
                         >
-                            <CardContent className={`p-0 ${isHovered && 'opacity-70'}`}>
+
+                            <CardContent className={`p-0 ${hoveredIndex === i && 'opacity-70'}`}>
                                 <Card className="max-h-48">
                                     <div className="relative p-0">
                                         <img
@@ -55,9 +66,10 @@ export default function TrendingCarousel() {
                                     </div>
                                 </Card>
                             </CardContent>
-                            {isHovered && <div className="flex justify-center items-center h-48 w-full absolute p-0">
-                                {<FaEye size={20} />}
-                            </div>}
+                            {hoveredIndex === i && <a className="flex justify-center items-center h-48 w-full absolute p-0" href={`https://openlibrary.org${res.key}`} target="_blank">
+                                <FaEye size={20} />
+                            </a>}
+
                         </CarouselItem>
                     ))}
                 </CarouselContent>
