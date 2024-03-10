@@ -10,8 +10,11 @@ import {
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { setPageIndex } from '../store/slices/bookieSlice'
 import { RootState } from "@/store/store";
+import { useEffect, useState } from "react"
 
 export function Paginate() {
+
+    const [count, setCount] = useState(10)
 
     const dispatch = useDispatch();
 
@@ -24,6 +27,25 @@ export function Paginate() {
         }
     }, shallowEqual)
 
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width <= 400) {
+                setCount(3);
+            } else if (width <= 640) {
+                setCount(5);
+            } else {
+                setCount(10);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Set initial count on mount
+
+        // Clean up the event listener on unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const content =
         <Pagination className='mb-4'>
             <PaginationContent>
@@ -35,7 +57,7 @@ export function Paginate() {
                     } />
                 </PaginationItem>
 
-                {data && Array.from({ length: data.numFound / limit < 10 ? data.numFound / limit : 10 }, (_, i) => i + 1).map((i) => {
+                {data && Array.from({ length: data.numFound / limit < 10 ? data.numFound / limit : count }, (_, i) => i + 1).map((i) => {
                     return (
                         <PaginationItem key={i}>
                             <PaginationLink className="hover:cursor-pointer" onClick={e => {
@@ -65,7 +87,7 @@ export function Paginate() {
         </Pagination>
 
     return (
-        <div>
+        <div className="mx-auto">
             {isLoaded === true && data !== null && content}
         </div>
     )

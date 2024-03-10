@@ -41,7 +41,6 @@ const persistedState: Partial<RootState> = loadState();
 const rootReducer = combineReducers({
   bookie: bookieReducer,
 });
-console.log("Persisted state: ", persistedState);
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -51,7 +50,6 @@ export const store = configureStore({
 store.subscribe(() => {
   saveState(store.getState());
 });
-console.log(store.getState());
 
 export type AppDispatch = typeof store.dispatch;
 

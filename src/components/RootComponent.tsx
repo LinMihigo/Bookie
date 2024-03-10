@@ -10,6 +10,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { setData, setIsLoaded, setIsLoading } from '@/store/slices/bookieSlice';
 import { RootState } from '@/store/store';
 import { Link } from 'react-router-dom';
+import TrendingCarousel from '@/components/Trending';
 
 export default function RootComponent({ Renderer }: { Renderer: () => JSX.Element }) {
 
@@ -39,8 +40,8 @@ export default function RootComponent({ Renderer }: { Renderer: () => JSX.Elemen
     }
 
     return (
-        <div className='container min-h-full min-w-xl'>
-            <div className="flex flex-col justify-between min-h-screen w-full justify-items-center">
+        <div className='container h-full w-screen overflow-auto'>
+            <div className="flex flex-col justify-between min-h-screen w-full">
                 <div className='flex w-full h-14 mt-1 items-center justify-between'>
                     <Link to='/'>
                         <span className='flex justify-center'>
@@ -54,7 +55,7 @@ export default function RootComponent({ Renderer }: { Renderer: () => JSX.Elemen
                         </span>
                     </Link>
 
-                    <div className="flex m gap-2 mx-8">
+                    <div className="flex gap-2 mx-8">
                         <a className='m-auto' href="https://github.com/LinMihigo/Bookie" target="_blank">
                             <FaGithub size='1.8rem' />
                         </a>
@@ -62,28 +63,35 @@ export default function RootComponent({ Renderer }: { Renderer: () => JSX.Elemen
                     </div>
                 </div>
 
-                <div className='my-4' >
-                    <div onClick={handleLinkClick}>
-                        <Link to='/Search' >
-                            <h1 className="text-3xl font-display font-bold text-center mb-4">Bookie</h1>
-                        </Link>
+                <div className={`grid grid-cols-1 gap-4 ${isLoaded === false && 'mt-2'}`}>
+
+                    <div className='my-4' >
+                        <div onClick={handleLinkClick}>
+                            <Link to='/Search' >
+                                <h1 className="text-3xl font-display font-bold text-center mb-4">Bookie</h1>
+                            </Link>
+                        </div>
+
+                        <Search />
+
+                        <p className='text-xs text-center mt-2'>Search the I.A's index of full-text books.</p>
                     </div>
 
-                    <Search />
+                    {isLoaded === false && <TrendingCarousel />}
 
-                    <p className='text-xs text-center mt-2'>Search the I.A's index of full-text books.</p>
-                </div>
-
-                <>
-                    <div className={`mx-auto ${isLoaded === true && isLoading === false && `min-h-[560px]`}`}>
-                        {isLoading === true ? <Skeleton /> : <Renderer />}
-                    </div>
                     <>
-                        {
-                            isLoading === false && data && <Paginate />
-                        }
+                        <div className={`mx-auto ${isLoaded === true && isLoading === false && `min-h-[560px]`}`}>
+                            {isLoading === true ? <Skeleton /> : <Renderer />}
+                        </div>
+                        <>
+                            {
+                                isLoading === false && data && <Paginate />
+                            }
+                        </>
+
                     </>
-                </>
+
+                </div>
 
                 <div className='w-full h-[2rem] text-center'>
                     <p className='inline mr-2 text-sm text-xs'>Powered by&nbsp;

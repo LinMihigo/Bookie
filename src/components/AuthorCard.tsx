@@ -24,7 +24,7 @@ export default function AuthorCard() {
             return (
 
                 // * res stands for response...
-                <Card key={res.key} className={cn("flex w-[380px] min-h-[190px] bg-stone-50 p-2")}>
+                <Card key={res.key} className={cn("flex max-w-[380px] min-h-[190px] bg-stone-50 p-2")}>
                     <div className='w-[140px] h-[164px] my-auto ml-3'>
                         <a href={`https://openlibrary.org/authors/${res.key}/works?limit=100`} target="_blank">
                             <img className='w-full h-full object-cover rounded'
@@ -56,7 +56,7 @@ export default function AuthorCard() {
                         <CardFooter className='p-0 pt-2'>
                             <Button
                                 variant='outline'
-                                className="w-[150px]"
+                                className="w-40"
                                 onClick={() => {
                                     res.key ?
                                         window.open(`https://openlibrary.org/authors/${res.key}/works?limit=100`, '_blank')
@@ -77,9 +77,10 @@ export default function AuthorCard() {
     return (
         <div className=''>
             {isLoaded === true && isLoading === false && <Sort />}
-            <div className='grid grid-cols-2 gap-2 justify-items-center w-[800px]'>
+            <div className='flex flex-wrap gap-2 p-auto justify-center max-w-200'>
 
                 {content}
+
             </div>
         </div>
     )

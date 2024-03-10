@@ -34,7 +34,7 @@ export default function BookCard() {
     }
 
     return (
-        <div className='flex flex-row flex-wrap gap-2 w-[800px]'>
+        <div className='flex flex-row flex-wrap gap-2'>
             {content}
         </div>
     )
